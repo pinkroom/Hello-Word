@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<script>
+    function a() {
+        console.log(a);
+        for (var i = 0; i < 3; i++) {
+            setTimeout(console.log(i), 0);
+        }
+        var a = 6;
+    }   //輸出 undefined 0 1 2  变量声明提升，值不提升。
+
+    function b() {
+        for (var i = 0; i < 3; i++) {
+            setTimeout(function () {
+                console.log(i)
+            }, 1)
+        }
+    }    //输出 3 3 3  先执行定时器外的代码，此时为3.
+         //setTimeout(function(){},时间)  构成定时器，遇到定时器先执行定时器上下文，最后才开始计时执行定时器内的代码。
+
+    function c() {
+        for (var i = 1; i <= 5; i++) {
+            console.log("定时器" + i);
+            setTimeout(function () {
+                console.log(i);
+            }, i * 1000)
+        }
+    }  //输出  定时器1 定时器2 定时器3 定时器4 定时器5  6 6 6 6 6
+
+    function d() {
+        for (var i = 1; i <= 5; i++) {
+            (function (i) {
+                setTimeout(function timer() {
+                    console.log(i);
+                }, i * 1000)
+            })(i)
+        }
+    }   //输出 1 2 3 4 5
+    // 闭包 将变量i作为参数传到闭包中，闭包的作用就是区分作用域，避免变量的混淆。
+
+
+    //a();
+    //b();
+    //c();
+    //d();
+    e();
+
+</script>
+</body>
+</html>
